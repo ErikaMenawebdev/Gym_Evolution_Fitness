@@ -68,21 +68,23 @@ const guardar = (req, res, next) => {
         });    
 };
 
-// Actualizar un pago por la cedula del cliente
+// Actualizar un pago por id del pago
 
 const actualizar = (req, res, next) => {
 
-    let cedula = req.body.cedula;
+    let id = req.body.id;
 
     let datos = {
+        cedula: req.body.cedula,
         nombre: req.body.nombre,
         valor: req.body.valor,
         metodoPago: req.body.metodoPago
     };
 
-    Pagos.findOneAndUpdate(
-        { cedula: cedula },
-        { $set: datos }
+    Pagos.findByIdAndUpdate(
+        id,
+        { $set: datos },
+        { new: true }
     )
 
     .then(response => {
@@ -100,13 +102,14 @@ const actualizar = (req, res, next) => {
 
 };
 
-// Eliminar un pago por la cedula del cliente
+
+// Eliminar un pago por id del pago
 
 const eliminar = (req, res, next) => {
 
-    let cedula = req.body.cedula;
+    let id = req.body.id;
 
-    Pagos.findOneAndDelete({ cedula: cedula })
+    Pagos.findByIdAndDelete(id)
 
         .then(response => {
             res.json({

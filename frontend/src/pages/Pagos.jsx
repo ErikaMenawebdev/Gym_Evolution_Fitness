@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
-import { obtenerPagos } from "../services/pagosService";
+import {
+  obtenerPagos,
+  eliminarPago,
+} from "../services/pagosService";
+
 import PagosForm from "../components/forms/PagosForm";
+import PagosTable from "../components/ui/PagosTable";
 
 export default function Pagos() {
 
   const [pagos, setPagos] = useState([]);
+  const [pagoEditar, setPagoEditar] = useState(null);
 
   useEffect(() => {
     cargarPagos();
@@ -20,6 +26,24 @@ export default function Pagos() {
     setPagos(data);
   };
 
+  const eliminar = async (id) => {
+
+    try {
+
+      await eliminarPago(id);
+
+      alert("Pago eliminado");
+
+      cargarPagos();
+
+    } catch (error) {
+
+      console.error(error);
+      alert("Error al eliminar el pago");
+
+    }
+  };
+
   return (
     <div>
 
@@ -27,7 +51,15 @@ export default function Pagos() {
         Pagos
       </h1>
 
-      <PagosForm onGuardar={cargarPagos} />
+      <PagosForm onGuardar={cargarPagos}
+      pagoEditar={pagoEditar}
+      setPagoEditar={setPagoEditar} />
+
+      <PagosTable
+        pagos={pagos}
+        onEliminar={eliminar}
+        onEditar={setPagoEditar}
+      />
 
     </div>
   );

@@ -1,7 +1,12 @@
-import { useState } from "react";
-import { guardarPago } from "../../services/pagosService";
+import { useState, useEffect } from "react";
+import { guardarPago,
+  actualizarPago,
+ } from "../../services/pagosService";
 
-export default function PagosForm({ onGuardar }) {
+export default function PagosForm({ onGuardar,
+  pagoEditar,
+  setPagoEditar,
+ }) {
 
   const [pago, setPago] = useState({
     cedula: "",
@@ -9,6 +14,21 @@ export default function PagosForm({ onGuardar }) {
     valor: "",
     metodoPago: "",
   });
+
+  useEffect(() => {
+
+  if (pagoEditar) {
+
+    setPago({
+      cedula: pagoEditar.cedula,
+      nombre: pagoEditar.nombre,
+      valor: pagoEditar.valor,
+      metodoPago: pagoEditar.metodoPago,
+    });
+
+  }
+
+}, [pagoEditar]);
 
   const manejarCambio = (e) => {
     setPago({
@@ -18,9 +38,34 @@ export default function PagosForm({ onGuardar }) {
   };
 
   const guardar = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
+  try {
+
+    if (pagoEditar) {
+
+      await actualizarPago({
+        id: pagoEditar._id,
+        cedula: pago.cedula,
+        nombre: pago.nombre,
+        valor: Number(pago.valor),
+        metodoPago: pago.metodoPago,
+      });
+
+      alert("Pago actualizado");
+
+      setPago({
+        cedula: "",
+        nombre: "",
+        valor: "",
+        metodoPago: "",
+      });
+
+      setPagoEditar(null);
+
+      onGuardar();
+
+    } else {
 
       await guardarPago({
         cedula: pago.cedula,
@@ -39,20 +84,21 @@ export default function PagosForm({ onGuardar }) {
       });
 
       onGuardar();
-
-    } catch (error) {
-
-      console.error(error);
-      alert("Error al guardar el pago");
-
     }
-  };
+
+  } catch (error) {
+
+    console.error(error);
+    alert("Error al guardar el pago");
+
+  }
+};
 
   return (
     <form onSubmit={guardar} className="mb-6">
 
       <h2 className="text-2xl font-bold mb-4">
-        Nuevo Pago
+       {pagoEditar ? "Editar Pago" : "Nuevo Pago"}
       </h2>
 
       <input
@@ -94,11 +140,11 @@ export default function PagosForm({ onGuardar }) {
       </select>
 
       <button
-        type="submit"
-        className="bg-blue-800 text-white px-4 py-2 rounded"
-      >
-        Guardar Pago
-      </button>
+  type="submit"
+  className="bg-blue-800 text-white px-4 py-2 rounded"
+>
+  {pagoEditar ? "Actualizar Pago" : "Guardar Pago"}
+</button>
 
     </form>
   );
