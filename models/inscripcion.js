@@ -8,14 +8,16 @@ const InscripcionSchema = new Schema({
         required: true
     },
 
-    idPlan:{ 
-        type: Number,
-        required: true
-    },
+    idPlan: {
+    type: Schema.Types.ObjectId,
+    ref: "Planes",
+    required: true
+},
 
     idPago: {
-        type: Number,
-        required: true
+    type: Schema.Types.ObjectId,
+    ref: "Pagos",
+    required: true
     },
 
     fechaInscripcion:{ 

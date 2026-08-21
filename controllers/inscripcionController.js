@@ -1,4 +1,5 @@
 const Inscripcion = require("../models/inscripcion");
+const Planes = require("../models/planes");
 
 // Obtener o consultar todas las inscripciones registradas.
 
@@ -41,90 +42,144 @@ const show = (req, res, next) => {
 
 // Guardar una inscripción
 
-const guardar = (req, res, next) => {
+const guardar = async (req, res, next) => {
 
-    let inscripcion = new Inscripcion(
+    try {
 
-        {
+        // Buscar el plan seleccionado
+        const plan = await Planes.findById(req.body.idPlan);
+
+        if (!plan) {
+            return res.status(404).json({
+                message: "El plan seleccionado no existe"
+            });
+        }
+
+        // Crear la fecha de inicio
+        const fechaInicio = new Date(req.body.fechaInicio);
+
+        // Calcular la fecha de finalización
+        const fechaFin = new Date(fechaInicio);
+        fechaFin.setDate(fechaFin.getDate() + plan.duracionDias);
+
+        // Crear la inscripción
+        const inscripcion = new Inscripcion({
             cedula: req.body.cedula,
             idPlan: req.body.idPlan,
             idPago: req.body.idPago,
             fechaInscripcion: req.body.fechaInscripcion,
-            fechaInicio: req.body.fechaInicio,
-            fechaFin: req.body.fechaFin,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
             estado: req.body.estado
         });
 
-        inscripcion.save()
+        const response = await inscripcion.save();
 
-        .then (response => {
-            res.json(
-                {response}
-            );
-        })
-
-        .catch (error => {
-           res.status(500).json(
-                {message:`Ocurrio un error al guardar la inscripcion`, error}
-            );
-        });    
-};
-
-// Actualizar una inscripción por la cédula del cliente
-
-const actualizar = (req, res, next) => {
-
-    let cedula = req.body.cedula;
-
-    let datos = {
-        cedula: req.body.cedula,
-        idPlan: req.body.idPlan,
-        idPago: req.body.idPago,
-        fechaInscripcion: req.body.fechaInscripcion,
-        fechaInicio: req.body.fechaInicio,
-        fechaFin: req.body.fechaFin,
-        estado: req.body.estado
-    };
-
-    Inscripcion.findOneAndUpdate(
-        { cedula: cedula },
-        { $set: datos }
-    )
-
-    .then(response => {
         res.json({
             response
         });
-    })
 
-    .catch(error => {
+    } catch (error) {
+
+        res.status(500).json({
+            message: "Ocurrió un error al guardar la inscripción",
+            error
+        });
+
+    }
+
+};
+
+// Actualizar una inscripción por el _id de la inscripción
+
+const actualizar = async (req, res, next) => {
+
+    try {
+
+        const id = req.body.id;
+
+        // Buscar el plan seleccionado
+        const plan = await Planes.findById(req.body.idPlan);
+
+        if (!plan) {
+            return res.status(404).json({
+                message: "El plan seleccionado no existe"
+            });
+        }
+
+        // Crear la fecha de inicio
+        const fechaInicio = new Date(req.body.fechaInicio);
+
+        // Calcular nuevamente la fecha de vencimiento
+        const fechaFin = new Date(fechaInicio);
+        fechaFin.setDate(fechaFin.getDate() + plan.duracionDias);
+
+        const datos = {
+            cedula: req.body.cedula,
+            idPlan: req.body.idPlan,
+            idPago: req.body.idPago,
+            fechaInscripcion: req.body.fechaInscripcion,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            estado: req.body.estado
+        };
+
+        const response = await Inscripcion.findByIdAndUpdate(
+            id,
+            { $set: datos },
+            { new: true }
+        );
+
+        if (!response) {
+            return res.status(404).json({
+                message: "La inscripción no existe"
+            });
+        }
+
+        res.json({
+            response
+        });
+
+    } catch (error) {
+
         res.status(500).json({
             message: "Ocurrió un error al actualizar la inscripción",
             error
         });
-    });
+
+    }
 
 };
 
-// Eliminar una inscripción por la cédula del cliente
+// Eliminar una inscripción por el _id de la inscripción
 
 const eliminar = (req, res, next) => {
 
-    let cedula = req.body.cedula;
+    const id = req.body.id;
 
-    Inscripcion.findOneAndDelete({ cedula: cedula })
+    Inscripcion.findByIdAndDelete(id)
 
         .then(response => {
+
+            if (!response) {
+                return res.status(404).json({
+                    message: "La inscripción no existe"
+                });
+            }
+
             res.json({
                 response
             });
+
         })
 
         .catch(error => {
+
             res.status(500).json({
                 message: "Ocurrió un error al eliminar la inscripción",
                 error
             });
+
         });
 
 };
