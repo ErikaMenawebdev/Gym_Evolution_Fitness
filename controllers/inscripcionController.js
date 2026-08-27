@@ -127,7 +127,7 @@ const actualizar = async (req, res, next) => {
         const response = await Inscripcion.findByIdAndUpdate(
             id,
             { $set: datos },
-            { new: true }
+            { returnDocument: "after" }
         );
 
         if (!response) {

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  obtenerInscripciones,
-  eliminarInscripcion,
+  obtenerInscripciones, 
 } from "../services/inscripcionesService";
 import InscripcionesForm from "../components/forms/InscripcionesForm";
 import InscripcionesTable from "../components/ui/InscripcionesTable";
@@ -25,25 +24,7 @@ export default function Inscripciones() {
     setInscripciones(data);
   };
 
-  const eliminar = async (id) => {
-
-  try {
-
-    await eliminarInscripcion(id);
-
-    alert("Inscripción eliminada");
-
-    cargarInscripciones();
-
-  } catch (error) {
-
-    console.error(error);
-    alert("Error al eliminar la inscripción");
-
-  }
-};
-
-  return (
+    return (
     <div>
 
       <h1 className="text-3xl font-bold mb-6">
@@ -57,7 +38,7 @@ export default function Inscripciones() {
 />
       <InscripcionesTable
       inscripciones={inscripciones}
-      onEliminar={eliminar}
+      onEliminar={cargarInscripciones}
       onEditar={setInscripcionEditar}
       />
     </div>

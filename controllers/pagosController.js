@@ -84,7 +84,7 @@ const actualizar = (req, res, next) => {
     Pagos.findByIdAndUpdate(
         id,
         { $set: datos },
-        { new: true }
+        { returnDocument: "after" }
     )
 
     .then(response => {

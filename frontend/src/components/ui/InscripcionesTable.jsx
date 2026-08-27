@@ -6,6 +6,17 @@ export default function InscripcionesTable({
   onEditar,
 }) {
 
+    const formatearFecha = (fecha) => {
+    if (!fecha) return "";
+
+    return new Date(fecha).toLocaleDateString("es-CO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  };
+
   const eliminar = async (id) => {
 
     const confirmar = window.confirm(
@@ -92,15 +103,15 @@ export default function InscripcionesTable({
             </td>
 
             <td className="border p-2">
-              {inscripcion.fechaInscripcion}
+              {formatearFecha(inscripcion.fechaInscripcion)}
             </td>
 
             <td className="border p-2">
-              {inscripcion.fechaInicio}
+              {formatearFecha(inscripcion.fechaInicio)}
             </td>
 
             <td className="border p-2">
-              {inscripcion.fechaFin}
+              {formatearFecha(inscripcion.fechaFin)}
             </td>
 
             <td className="border p-2">
@@ -112,6 +123,7 @@ export default function InscripcionesTable({
               <div className="flex gap-2">
 
                 <button
+                  type="button"
                   onClick={() => onEditar(inscripcion)}
                   className="bg-yellow-500 text-white px-4 py-2 rounded"
                 >
@@ -119,6 +131,7 @@ export default function InscripcionesTable({
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => eliminar(inscripcion._id)}
                   className="bg-red-600 text-white px-4 py-2 rounded"
                 >

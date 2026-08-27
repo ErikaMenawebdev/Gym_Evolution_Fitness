@@ -1,55 +1,33 @@
-const API_URL = "http://localhost:7000/inscripcion";
+import api from "./api";
+
+const API = "/inscripcion";
 
 // Obtener todas las inscripciones
 export const obtenerInscripciones = async () => {
-    const response = await fetch(API_URL);
+    const response = await api.get(API);
 
-    const data = await response.json();
-
-    return data.response;
+    return response.data.response;
 };
 
 // Guardar una inscripción
 export const guardarInscripcion = async (inscripcion) => {
-    const response = await fetch(`${API_URL}/guardar`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(inscripcion)
-    });
+    const response = await api.post(`${API}/guardar`, inscripcion);
 
-    const data = await response.json();
-
-    return data;
+    return response.data;
 };
 
 // Actualizar una inscripción
 export const actualizarInscripcion = async (inscripcion) => {
-    const response = await fetch(`${API_URL}/actualizar`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(inscripcion)
-    });
+    const response = await api.put(`${API}/actualizar`, inscripcion);
 
-    const data = await response.json();
-
-    return data;
+    return response.data;
 };
 
 // Eliminar una inscripción
 export const eliminarInscripcion = async (id) => {
-    const response = await fetch(`${API_URL}/eliminar`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id })
+    const response = await api.delete(`${API}/eliminar`, {
+        data: { id },
     });
 
-    const data = await response.json();
-
-    return data;
+    return response.data;
 };
