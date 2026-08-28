@@ -11,6 +11,7 @@ const inscripcionRouter = require("./routers/inscripcion");
 const planesRouter = require("./routers/planes");
 const pagosRouter = require("./routers/pagos");
 const usuariosRoutes = require("./routers/usuarios");
+const dashboardRouter = require("./routers/dashboard");
 
 const db = mongoose.connection;
 
@@ -36,6 +37,7 @@ app.use("/inscripcion", inscripcionRouter);
 app.use("/planes", planesRouter);
 app.use("/pagos", pagosRouter);
 app.use("/usuarios", usuariosRoutes);
+app.use("/dashboard", dashboardRouter);
 
 const PORT = process.env.PORT || 7000;
 

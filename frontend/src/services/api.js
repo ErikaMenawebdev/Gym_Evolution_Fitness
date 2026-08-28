@@ -4,6 +4,8 @@ const api = axios.create({
   baseURL: "http://localhost:7000",
 });
 
+
+// Interceptor de solicitudes
 api.interceptors.request.use((config) => {
 
   const token = localStorage.getItem("token");
@@ -14,5 +16,26 @@ api.interceptors.request.use((config) => {
 
   return config;
 });
+
+
+// Interceptor de respuestas
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+
+  (error) => {
+
+    if (error.response?.status === 401) {
+
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 
 export default api;

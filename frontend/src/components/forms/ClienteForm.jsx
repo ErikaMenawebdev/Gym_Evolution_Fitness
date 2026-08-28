@@ -116,6 +116,9 @@ onGuardar();
         className="border p-2 w-full"
       />
 
+     <label className="block mb-1">
+  Fecha de Nacimiento
+</label>
       <input
         type="date"
         name="fechaNacimiento"
