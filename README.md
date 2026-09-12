@@ -70,7 +70,7 @@ The project was developed to strengthen my skills in **Full Stack JavaScript dev
 
 ### 📝 Membership Registration
 
-![Evolution Fitness - Memberships](screenshots/inscripciones.png)
+![Evolution Fitness - Memberships](./screenshots/inscripciones.png)
 
 ---
 
