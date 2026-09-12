@@ -58,20 +58,19 @@ The project was developed to strengthen my skills in **Full Stack JavaScript dev
 
 ### 🔐 Login
 
-![Evolution Fitness - Login](screenshots/login.png)
+<img src="screenshots/login.png" alt="Evolution Fitness - Login" width="800">
 
 ### 📊 Dashboard
 
-![Evolution Fitness - Dashboard](screenshots/dashboard.png)
+<img src="screenshots/dashboard.png" alt="Evolution Fitness - Dashboard" width="800">
 
 ### 👥 Client Management
 
-![Evolution Fitness - Clients](screenshots/clientes.png)
+<img src="screenshots/clientes.png" alt="Evolution Fitness - Clients" width="800">
 
 ### 📝 Membership Registration
 
-![Evolution Fitness - Memberships](./screenshots/inscripciones.png)
-
+<img src="screenshots/inscripciones.png" alt="Evolution Fitness - Memberships" width="800">
 ---
 
 # 🛠️ Tech Stack
