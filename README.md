@@ -56,10 +56,6 @@ The project was developed to strengthen my skills in **Full Stack JavaScript dev
 
 # 📸 Application Preview
 
-### 🔐 Login
-
-<img src="https://raw.githubusercontent.com/ErikaMenawebdev/Gym_Evolution_Fitness/main/screenshots/login.png" alt="Evolution Fitness - Login" width="800">
-
 ### 📊 Dashboard
 
 <img src="https://raw.githubusercontent.com/ErikaMenawebdev/Gym_Evolution_Fitness/main/screenshots/dashboard.png" alt="Evolution Fitness - Dashboard" width="800">
@@ -67,10 +63,6 @@ The project was developed to strengthen my skills in **Full Stack JavaScript dev
 ### 👥 Client Management
 
 <img src="https://raw.githubusercontent.com/ErikaMenawebdev/Gym_Evolution_Fitness/main/screenshots/clientes.png" alt="Evolution Fitness - Clients" width="800">
-
-### 📝 Membership Registration
-
-<img src="https://raw.githubusercontent.com/ErikaMenawebdev/Gym_Evolution_Fitness/main/screenshots/inscripciones.png" alt="Evolution Fitness - Memberships" width="800">
 
 ---
 
